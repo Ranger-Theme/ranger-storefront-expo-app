@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "react-native-expo-app",
-    "slug": "react-native-expo-app",
+    "slug": "expo-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -31,6 +31,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6e26ce30-1628-4483-ab43-e791050e4ea8"
+      }
+    },
+    "owner": "caesarluo"
   }
 }
