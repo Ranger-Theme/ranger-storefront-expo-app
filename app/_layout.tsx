@@ -3,21 +3,20 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { ApolloProvider } from "@apollo/client";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { Provider as PaperProvider } from "react-native-paper";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
-import { apolloClient } from "@/utils/apllo";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import AppLayout from "@/components/AppLayout";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -26,6 +25,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      router.push("/login");
     }
   }, [loaded]);
 
@@ -34,16 +34,15 @@ export default function RootLayout() {
   }
 
   return (
-    <ApolloProvider client={apolloClient}>
+    <PaperProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <AppLayout>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="checkout" options={{ headerShown: true }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </AppLayout>
+        <Stack>
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="checkout" options={{ headerShown: true }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
       </ThemeProvider>
-    </ApolloProvider>
+    </PaperProvider>
   );
 }
